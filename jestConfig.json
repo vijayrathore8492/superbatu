@@ -1,4 +1,12 @@
 {
+  "globals": {
+    "ts-jest": {
+      "diagnostics": {
+        "warnOnly": true
+      }
+    }
+  },
+  "preset": "@shelf/jest-mongodb",
   "transform": {
     "^.+\\.(t|j)sx?$": "ts-jest"
   },
