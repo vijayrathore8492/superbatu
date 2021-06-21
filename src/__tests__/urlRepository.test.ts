@@ -26,7 +26,7 @@ describe('UrlRepository', () => {
         try {
           await UrlRepository.createShortUrl(url);
         } catch (e) {
-          expect(e.message).toEqual('SuperBatu: no mongo provided');
+          expect(e.message).toEqual('Superbatu: no mongo provided');
         }
       });
     });

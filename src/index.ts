@@ -2,7 +2,9 @@ import * as _ from 'lodash';
 import { Request, Response } from 'express';
 import UrlRepository from './urlRepository';
 
-export const createShortUrl = async (u: string): Promise<string> => UrlRepository.createShortUrl(u);
+export const createShortUrl = async (u: string): Promise<{
+  uid: string,
+  url: string}> => UrlRepository.createShortUrl(u);
 
 export const shortUrlHandler = async (req: Request, res: Response) => {
   const uid = _.get(req, 'params.uid');

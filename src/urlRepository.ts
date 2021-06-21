@@ -29,14 +29,19 @@ export default class UrlRepository {
     }
   })();
 
-  public static async createShortUrl(url: string) {
+  public static async createShortUrl(url: string): Promise<{uid: string, url: string}> {
     const mongoCollection = await UrlRepository.mongoCollection;
     if (!mongoCollection) {
-      throw new Error('SuperBatu: no mongo provided');
+      throw new Error('Superbatu: no mongo provided');
     }
 
     const result = await this.getUidFromUrl(url);
-    if (result) return result;
+    if (result) {
+      return {
+        uid: result.uid,
+        url: result.url,
+      };
+    }
 
     const shortUrlMapping = {
       uid: nanoid(11),
