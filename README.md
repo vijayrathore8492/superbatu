@@ -22,9 +22,9 @@ SUPERBATU_MONGO_COLLECTION="your-collection-name"
 #### create a short url
 ```javascript
 import { createShortUrl } from 'superbatu';
-const result = createShortUrl('https://www.yoursuperlong.url')
+const { uid, url } = await createShortUrl('https://www.yoursuperlong.url')
 ```
- the result will have `uid`(a unique identifier for url)  and `url` original URL.
+`uid`(a unique identifier for url)  and `url` original URL.
 
 #### Serve short URL with expressjs
 ```javascript
