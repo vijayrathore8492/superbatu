@@ -2,7 +2,7 @@
   "name": "superbatu",
   "version": "0.0.1",
   "description": "A Custom URL Shortener",
-  "main": "index.js",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "preversion": "npm run lint",
