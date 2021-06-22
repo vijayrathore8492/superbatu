@@ -1,6 +1,6 @@
 {
   "name": "superbatu",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A Custom URL Shortener",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
