@@ -13,25 +13,28 @@ export default class UrlRepository {
     return connString;
   })();
 
-  static mongoCollection = (async () => {
+  static mongoCollection;
+
+  static connectMongo = async () => {
     try {
+      if (UrlRepository.mongoCollection) return UrlRepository.mongoCollection;
       if (UrlRepository.mongoURI === 'mongodb://') throw new Error('Superbatu: incorrect mongo configs');
 
       const connection = await MongoClient.connect(UrlRepository.mongoURI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       });
-      return await connection.db(process.env.SUPERBATU_MONGO_DATABASE)
+      UrlRepository.mongoCollection = await connection.db(process.env.SUPERBATU_MONGO_DATABASE)
         .collection(process.env.SUPERBATU_MONGO_COLLECTION);
     } catch (e) {
       console.error('Superbatu failed to connect to mongo', e);
-      return false;
+      UrlRepository.mongoCollection = false;
     }
-  })();
+  };
 
   public static async createShortUrl(url: string): Promise<{uid: string, url: string}> {
-    const mongoCollection = await UrlRepository.mongoCollection;
-    if (!mongoCollection) {
+    await UrlRepository.connectMongo();
+    if (!UrlRepository.mongoCollection) {
       throw new Error('Superbatu: no mongo provided');
     }
 
@@ -47,21 +50,21 @@ export default class UrlRepository {
       uid: nanoid(11),
       url,
     };
-    await mongoCollection.insertOne(shortUrlMapping);
+    await UrlRepository.mongoCollection.insertOne(shortUrlMapping);
     return shortUrlMapping;
   }
 
   public static async getUrlFromUid(uid: string) {
-    const mongoCollection = await UrlRepository.mongoCollection;
-    if (!mongoCollection) return false;
+    await UrlRepository.connectMongo();
+    if (!UrlRepository.mongoCollection) return false;
 
-    return (await mongoCollection.find({ uid }).toArray())[0];
+    return (await UrlRepository.mongoCollection.find({ uid }).toArray())[0];
   }
 
   public static async getUidFromUrl(url: string) {
-    const mongoCollection = await UrlRepository.mongoCollection;
-    if (!mongoCollection) return false;
+    await UrlRepository.connectMongo();
+    if (!UrlRepository.mongoCollection) return false;
 
-    return (await mongoCollection.find({ url }).toArray())[0];
+    return (await UrlRepository.mongoCollection.find({ url }).toArray())[0];
   }
 }

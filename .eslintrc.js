@@ -17,6 +17,8 @@ module.exports = {
   ],
   rules: {
     "import/extensions": "off",
-    "import/no-unresolved": "off"
+    "import/no-unresolved": "off",
+    "consistent-return": "off",
+    "no-return-await": "off"
   },
 };

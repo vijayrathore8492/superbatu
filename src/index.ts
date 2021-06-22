@@ -4,7 +4,7 @@ import UrlRepository from './urlRepository';
 
 export const createShortUrl = async (u: string): Promise<{
   uid: string,
-  url: string}> => UrlRepository.createShortUrl(u);
+  url: string}> => await UrlRepository.createShortUrl(u);
 
 export const shortUrlHandler = async (req: Request, res: Response) => {
   const uid = _.get(req, 'params.uid');
